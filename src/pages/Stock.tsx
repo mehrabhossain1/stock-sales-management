@@ -157,17 +157,20 @@ export function StockPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-3xl font-bold">Stock Management</h1>
-        <Button onClick={() => setShowForm(true)}>
+        <h1 className="text-3xl font-bold tracking-tight">Stock Management</h1>
+        <Button
+          onClick={() => setShowForm(true)}
+          className="transition hover:scale-105"
+        >
           <Plus className="mr-2 h-4 w-4" />
-          Add New Item
+          Add New Products
         </Button>
       </div>
 
       {showForm ? (
-        <Card>
+        <Card className="shadow-md hover:shadow-lg transition">
           <CardHeader>
             <CardTitle>
               {editingItem ? "Edit Product" : "Add New Product"}
@@ -185,56 +188,39 @@ export function StockPage() {
         <>
           {/* Summary Cards */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-            <Card className=" bg-blue-500 text-white">
+            <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md hover:shadow-lg transition">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Stock Items
                 </CardTitle>
-                <BarChart3 className="h-4 w-4 text-muted" />
+                <BarChart3 className="h-5 w-5 opacity-80" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{totalStockItems}</div>
-                <p className="text-xs text-muted">
-                  Across {stockItems.length} different products
+                <div className="text-3xl font-bold">{totalStockItems}</div>
+                <p className="text-xs text-white/70">
+                  Across {stockItems.length} products
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-green-500 text-white">
+            <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md hover:shadow-lg transition">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Inventory Value
                 </CardTitle>
-                <DollarSign className="h-4 w-4 text-muted" />
+                <DollarSign className="h-5 w-5 opacity-80" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-3xl font-bold">
                   ৳{totalInventoryValue.toFixed(2)}
                 </div>
-                <p className="text-xs text-muted">
-                  Based on current stock levels
-                </p>
+                <p className="text-xs text-white/70">Based on current stock</p>
               </CardContent>
             </Card>
-
-            {/* <Card className="bg-yellow-50 text-yellow-800">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Average Price
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  ${averagePrice.toFixed(2)}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Per item in inventory
-                </p>
-              </CardContent>
-            </Card> */}
           </div>
 
-          <Card>
+          {/* Stock Overview */}
+          <Card className="shadow-md hover:shadow-lg transition">
             <CardHeader>
               <CardTitle>Stock Overview</CardTitle>
             </CardHeader>
@@ -250,34 +236,40 @@ export function StockPage() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <div className="flex gap-2">
-                  <Button variant="outline">Export</Button>
-                </div>
+                {/* <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    className="transition hover:bg-muted"
+                  >
+                    Export
+                  </Button>
+                </div> */}
               </div>
 
-              <div className="rounded-md border">
+              <div className="rounded-md border overflow-x-auto">
                 <Table>
-                  <TableHeader className="bg-muted text-muted-foreground">
+                  <TableHeader className="bg-muted/60">
                     <TableRow>
-                      <TableHead className="w-[80px]">Serial</TableHead>
+                      <TableHead className="w-[80px]">#</TableHead>
                       <TableHead>Product Name</TableHead>
                       <TableHead>Quantity</TableHead>
-                      <TableHead>Price Per Product</TableHead>
-                      <TableHead>Total Value</TableHead>
-                      <TableHead>Date Added</TableHead>
+                      <TableHead>Price</TableHead>
+                      <TableHead>Total</TableHead>
+                      <TableHead>Date</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {sortedAndFilteredItems.map((item, index) => (
-                      <TableRow key={item.id}>
+                      <TableRow
+                        key={item.id}
+                        className="hover:bg-muted/40 even:bg-muted/10 transition"
+                      >
                         <TableCell>{index + 1}</TableCell>
-                        <TableCell className="font-medium">
-                          {item.name}
-                        </TableCell>
+                        <TableCell>{item.name}</TableCell>
                         <TableCell>{item.quantity}</TableCell>
                         <TableCell>৳{item.price.toFixed(2)}</TableCell>
-                        <TableCell className="font-medium">
+                        <TableCell className="font-bold">
                           ৳{(item.quantity * item.price).toFixed(2)}
                         </TableCell>
                         <TableCell>{formatDate(item.date)}</TableCell>
@@ -289,16 +281,14 @@ export function StockPage() {
                                   <Button
                                     variant="outline"
                                     size="icon"
-                                    className="h-8 w-8"
+                                    className="h-8 w-8 transition hover:bg-primary/10"
                                     onClick={() => handleEditClick(item)}
                                   >
                                     <Pencil className="h-4 w-4" />
                                     <span className="sr-only">Edit</span>
                                   </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>Edit product</p>
-                                </TooltipContent>
+                                <TooltipContent>Edit Product</TooltipContent>
                               </Tooltip>
 
                               <Tooltip>
@@ -306,16 +296,14 @@ export function StockPage() {
                                   <Button
                                     variant="outline"
                                     size="icon"
-                                    className="h-8 w-8 text-destructive hover:bg-destructive/10"
+                                    className="h-8 w-8 text-destructive hover:bg-destructive/10 transition"
                                     onClick={() => handleDeleteClick(item.id)}
                                   >
                                     <Trash2 className="h-4 w-4" />
                                     <span className="sr-only">Delete</span>
                                   </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>Delete product</p>
-                                </TooltipContent>
+                                <TooltipContent>Delete Product</TooltipContent>
                               </Tooltip>
                             </div>
                           </TooltipProvider>

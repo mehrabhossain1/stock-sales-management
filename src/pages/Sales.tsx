@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  Calendar,
-  Download,
+  // Calendar,
+  // Download,
   Pencil,
   Search,
   ShoppingBag,
@@ -157,17 +157,20 @@ export function SalesPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-3xl font-bold">Sales Management</h1>
-        <Button onClick={() => setShowForm(true)}>
+        <Button
+          onClick={() => setShowForm(true)}
+          className="transition hover:scale-105"
+        >
           <ShoppingCart className="mr-2 h-4 w-4" />
           New Sale
         </Button>
       </div>
 
       {showForm ? (
-        <Card>
+        <Card className="shadow-md hover:shadow-lg transition">
           <CardHeader>
             <CardTitle>{editingItem ? "Edit Sale" : "New Sale"}</CardTitle>
           </CardHeader>
@@ -182,15 +185,15 @@ export function SalesPage() {
       ) : (
         <>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="bg-green-500 text-white">
+            <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md hover:shadow-lg transition">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Sales
                 </CardTitle>
-                <ShoppingCart className="h-4 w-4 text-muted" />
+                <ShoppingCart className="h-5 w-5 opacity-80" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-3xl font-bold">
                   ৳{totalSales.toFixed(2)}
                 </div>
                 {/* <p className="text-xs text-muted-foreground">
@@ -199,56 +202,40 @@ export function SalesPage() {
               </CardContent>
             </Card>
 
-            {/* <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Average Order Value
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  ৳{averageOrderValue.toFixed(2)}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  +2% from last month
-                </p>
-              </CardContent>
-            </Card> */}
-
-            <Card className="bg-blue-500 text-white">
+            <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md hover:shadow-lg transition">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Products Sold
                 </CardTitle>
-                <ShoppingBag className="h-4 w-4 text-muted" />
+                <ShoppingBag className="h-5 w-5 opacity-80" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-3xl font-bold">
                   {salesData.reduce((total, sale) => total + sale.quantity, 0)}
                 </div>
-                <p className="text-xs text-muted">
+                <p className="text-xs text-white/70">
                   Across {salesData.length} orders
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-yellow-500 text-white">
+            <Card className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white shadow-md hover:shadow-lg transition">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Customers
                 </CardTitle>
-                <Users className="h-4 w-4 text-muted" />
+                <Users className="h-5 w-5 opacity-80" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-3xl font-bold">
                   {new Set(salesData.map((sale) => sale.customerName)).size}
                 </div>
-                <p className="text-xs text-muted">Unique customers</p>
+                <p className="text-xs text-white/70">Unique customers</p>
               </CardContent>
             </Card>
           </div>
 
-          <Card>
+          <Card className="shadow-md hover:shadow-lg transition">
             <CardHeader>
               <CardTitle>Recent Sales</CardTitle>
             </CardHeader>
@@ -264,7 +251,7 @@ export function SalesPage() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <div className="flex gap-2">
+                {/* <div className="flex gap-2">
                   <Button variant="outline">
                     <Calendar className="mr-2 h-4 w-4" />
                     Filter by Date
@@ -273,18 +260,18 @@ export function SalesPage() {
                     <Download className="mr-2 h-4 w-4" />
                     Export
                   </Button>
-                </div>
+                </div> */}
               </div>
 
               <div className="rounded-md border">
                 <Table>
-                  <TableHeader className="bg-gray-100">
+                  <TableHeader className="bg-muted/60">
                     <TableRow>
                       <TableHead className="w-[80px]">Serial</TableHead>
                       <TableHead>Customer Name</TableHead>
                       <TableHead>Product Name</TableHead>
                       <TableHead>Quantity</TableHead>
-                      <TableHead>Price Per Product</TableHead>
+                      <TableHead>Price</TableHead>
                       <TableHead>Total</TableHead>
                       <TableHead>Date</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
@@ -292,7 +279,10 @@ export function SalesPage() {
                   </TableHeader>
                   <TableBody>
                     {sortedAndFilteredSales.map((sale, index) => (
-                      <TableRow key={sale.id}>
+                      <TableRow
+                        key={sale.id}
+                        className="hover:bg-muted/40 even:bg-muted/10 transition"
+                      >
                         <TableCell>{index + 1}</TableCell>
                         <TableCell className="font-medium">
                           {sale.customerName}
@@ -302,7 +292,7 @@ export function SalesPage() {
                         <TableCell>
                           ৳{sale.pricePerProduct.toFixed(2)}
                         </TableCell>
-                        <TableCell className="font-medium">
+                        <TableCell className="font-bold">
                           ৳{(sale.quantity * sale.pricePerProduct).toFixed(2)}
                         </TableCell>
                         <TableCell>{formatDate(sale.date)}</TableCell>
