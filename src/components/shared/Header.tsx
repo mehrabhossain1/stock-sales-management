@@ -20,9 +20,9 @@ interface HeaderProps {
 
 export function Header({ isLoggedIn = false, onLogin, onLogout }: HeaderProps) {
   return (
-    <header className="flex h-16 items-center px-4 md:px-6">
+    <header className="flex h-24 items-center px-4 md:px-6 ">
       <div className="flex items-center gap-2">
-        <SidebarTrigger className="md:hidden" />
+        <SidebarTrigger className="" />
         <motion.h1
           className="text-sm lg:text-lg font-semibold "
           initial={{ opacity: 0 }}

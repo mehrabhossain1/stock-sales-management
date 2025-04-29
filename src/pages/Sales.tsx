@@ -160,10 +160,7 @@ export function SalesPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-3xl font-bold">Sales Management</h1>
-        <Button
-          onClick={() => setShowForm(true)}
-          className="transition hover:scale-105"
-        >
+        <Button onClick={() => setShowForm(true)} className="transition ">
           <ShoppingCart className="mr-2 h-4 w-4" />
           New Sale
         </Button>
