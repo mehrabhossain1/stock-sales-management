@@ -8,9 +8,9 @@ import {
   Search,
   Trash2,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { StockForm, type StockItem } from "@/components/forms/NewStockForm";
+// import { StockForm, type StockItem } from "@/components/forms/NewStockForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -36,69 +36,82 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useStockStore } from "@/store/stockStore";
 
 // Updated mock data with dates
-const initialStockItems: StockItem[] = [
-  {
-    id: 1,
-    name: "Product A",
-    quantity: 150,
-    price: 299.99,
-    date: "2023-04-15T10:30:00",
-  },
-  {
-    id: 2,
-    name: "Product B",
-    quantity: 75,
-    price: 499.99,
-    date: "2023-04-18T14:45:00",
-  },
-  {
-    id: 3,
-    name: "Product C",
-    quantity: 200,
-    price: 49.99,
-    date: "2023-04-20T09:15:00",
-  },
-  {
-    id: 4,
-    name: "Product D",
-    quantity: 5,
-    price: 999.99,
-    date: "2023-04-22T16:30:00",
-  },
-  {
-    id: 5,
-    name: "Product E",
-    quantity: 0,
-    price: 9.99,
-    date: "2023-04-25T11:20:00",
-  },
-];
+// const initialStockItems: StockItem[] = [
+//   {
+//     id: 1,
+//     name: "Product A",
+//     quantity: 150,
+//     price: 299.99,
+//     date: "2023-04-15T10:30:00",
+//   },
+//   {
+//     id: 2,
+//     name: "Product B",
+//     quantity: 75,
+//     price: 499.99,
+//     date: "2023-04-18T14:45:00",
+//   },
+//   {
+//     id: 3,
+//     name: "Product C",
+//     quantity: 200,
+//     price: 49.99,
+//     date: "2023-04-20T09:15:00",
+//   },
+//   {
+//     id: 4,
+//     name: "Product D",
+//     quantity: 5,
+//     price: 999.99,
+//     date: "2023-04-22T16:30:00",
+//   },
+//   {
+//     id: 5,
+//     name: "Product E",
+//     quantity: 0,
+//     price: 9.99,
+//     date: "2023-04-25T11:20:00",
+//   },
+// ];
 
 export function StockPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState<number | null>(null);
+  // const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [stockItems, setStockItems] = useState<StockItem[]>(initialStockItems);
-  const [editingItem, setEditingItem] = useState<StockItem | null>(null);
+  // const [stockItems, setStockItems] = useState<StockItem[]>(initialStockItems);
+  // const [editingItem, setEditingItem] = useState<StockItem | null>(null);
+
+  const { stocks, fetchStocks, loading, error } = useStockStore();
+  console.log(stocks);
+
+  useEffect(() => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InpoYW5pa0BnbWFpbC5jb20iLCJpYXQiOjE3NDU5MTc4MjYsImV4cCI6MTc0NjAwNDIyNn0.Gnu73tNY2astZWIGTqYhSu0Ex8XOSq2gNG6N1mBtLOw"; // 🔐 Replace with actual token
+    fetchStocks(token);
+  }, [fetchStocks]);
+
+  if (loading) return <p>Loading stocks...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   // Sort items by date (newest first) and filter by search term
-  const sortedAndFilteredItems = [...stockItems]
+  const sortedAndFilteredItems = [...stocks]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   // Calculate total stock items (sum of all quantities)
-  const totalStockItems = stockItems.reduce(
+  const totalStockItems = stocks.reduce(
     (total, item) => total + item.quantity,
     0
   );
 
   // Calculate total value of inventory (sum of quantity * price for each item)
-  const totalInventoryValue = stockItems.reduce(
+  const totalInventoryValue = stocks.reduce(
     (total, item) => total + item.quantity * item.price,
     0
   );
@@ -107,43 +120,44 @@ export function StockPage() {
   // const averagePrice =
   //   stockItems.length > 0 ? totalInventoryValue / totalStockItems : 0;
 
-  const handleDeleteClick = (id: number) => {
-    setItemToDelete(id);
-    setDeleteDialogOpen(true);
-  };
+  // const handleDeleteClick = (id: number) => {
+  //   setItemToDelete(id);
+  //   setDeleteDialogOpen(true);
+  // };
 
-  const confirmDelete = () => {
-    if (itemToDelete !== null) {
-      setStockItems(stockItems.filter((item) => item.id !== itemToDelete));
-    }
-    setDeleteDialogOpen(false);
-    setItemToDelete(null);
-  };
+  // TODO: Implement delete functionality
+  // const confirmDelete = () => {
+  //   if (itemToDelete !== null) {
+  //     setStockItems(stockItems.filter((item) => item.id !== itemToDelete));
+  //   }
+  //   setDeleteDialogOpen(false);
+  //   setItemToDelete(null);
+  // };
 
-  const handleEditClick = (item: StockItem) => {
-    setEditingItem(item);
-    setShowForm(true);
-  };
+  // const handleEditClick = (item: StockItem) => {
+  //   setEditingItem(item);
+  //   setShowForm(true);
+  // };
 
-  const handleFormSubmit = (item: StockItem) => {
-    if (editingItem) {
-      // Update existing item
-      setStockItems(
-        stockItems.map((stockItem) =>
-          stockItem.id === item.id ? item : stockItem
-        )
-      );
-      setEditingItem(null);
-    } else {
-      // Add new item
-      setStockItems([...stockItems, item]);
-    }
-  };
+  // const handleFormSubmit = (item: StockItem) => {
+  //   if (editingItem) {
+  //     // Update existing item
+  //     setStockItems(
+  //       stockItems.map((stockItem) =>
+  //         stockItem.id === item.id ? item : stockItem
+  //       )
+  //     );
+  //     setEditingItem(null);
+  //   } else {
+  //     // Add new item
+  //     setStockItems([...stockItems, item]);
+  //   }
+  // };
 
-  const handleBackFromForm = () => {
-    setShowForm(false);
-    setEditingItem(null);
-  };
+  // const handleBackFromForm = () => {
+  //   setShowForm(false);
+  //   setEditingItem(null);
+  // };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -170,15 +184,15 @@ export function StockPage() {
         <Card className="shadow-md hover:shadow-lg transition">
           <CardHeader>
             <CardTitle>
-              {editingItem ? "Edit Product" : "Add New Product"}
+              {/* {editingItem ? "Edit Product" : "Add New Product"} */}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <StockForm
+            {/* <StockForm
               onBack={handleBackFromForm}
               onSubmit={handleFormSubmit}
               editItem={editingItem}
-            />
+            /> */}
           </CardContent>
         </Card>
       ) : (
@@ -195,7 +209,7 @@ export function StockPage() {
               <CardContent>
                 <div className="text-3xl font-bold">{totalStockItems}</div>
                 <p className="text-xs text-white/70">
-                  Across {stockItems.length} products
+                  Across {stocks.length} products
                 </p>
               </CardContent>
             </Card>
@@ -259,7 +273,7 @@ export function StockPage() {
                   <TableBody>
                     {sortedAndFilteredItems.map((item, index) => (
                       <TableRow
-                        key={item.id}
+                        key={item._id}
                         className="hover:bg-muted/40 even:bg-muted/10 transition"
                       >
                         <TableCell>{index + 1}</TableCell>
@@ -279,7 +293,7 @@ export function StockPage() {
                                     variant="outline"
                                     size="icon"
                                     className="h-8 w-8 transition hover:bg-primary/10"
-                                    onClick={() => handleEditClick(item)}
+                                    // onClick={() => handleEditClick(item)}
                                   >
                                     <Pencil className="h-4 w-4" />
                                     <span className="sr-only">Edit</span>
@@ -294,7 +308,7 @@ export function StockPage() {
                                     variant="outline"
                                     size="icon"
                                     className="h-8 w-8 text-destructive hover:bg-destructive/10 transition"
-                                    onClick={() => handleDeleteClick(item.id)}
+                                    // onClick={() => handleDeleteClick(item.id)}
                                   >
                                     <Trash2 className="h-4 w-4" />
                                     <span className="sr-only">Delete</span>
@@ -339,9 +353,8 @@ export function StockPage() {
             >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDelete}>
-              Delete
-            </Button>
+            {/* <Button variant="destructive" onClick={confirmDelete}> */}
+            <Button variant="destructive">Delete</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
