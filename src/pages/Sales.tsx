@@ -1,12 +1,11 @@
 "use client";
 
 import {
-  BarChart,
   Calendar,
   Download,
   Pencil,
-  PieChart,
   Search,
+  ShoppingBag,
   ShoppingCart,
   Trash2,
   Users,
@@ -188,7 +187,7 @@ export function SalesPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Sales
                 </CardTitle>
-                <BarChart className="h-4 w-4 text-muted" />
+                <ShoppingCart className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -221,7 +220,7 @@ export function SalesPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Products Sold
                 </CardTitle>
-                <PieChart className="h-4 w-4 text-muted" />
+                <ShoppingBag className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">

@@ -1,6 +1,11 @@
 "use client";
 
-import { BarChart3, BoxIcon, Home, ShoppingCart } from "lucide-react";
+import {
+  BarChart3,
+  BoxIcon,
+  LayoutDashboard,
+  ShoppingCart,
+} from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 
 import {
@@ -38,7 +43,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={isActive("/dashboard")}>
                   <Link to="/dashboard">
-                    <Home className="h-4 w-4" />
+                    <LayoutDashboard className="h-4 w-4" />
                     <span>Dashboard</span>
                   </Link>
                 </SidebarMenuButton>

@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LineChart, BarChart, PieChart } from "lucide-react";
+import { BarChart3, DollarSign, ShoppingCart } from "lucide-react";
 
 export function DashboardPage() {
   return (
@@ -16,7 +16,7 @@ export function DashboardPage() {
         <Card className="bg-violet-500 text-white">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <LineChart className="h-4 w-4 text-muted" />
+            <DollarSign className="h-4 w-4 text-muted" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">৳45,231.89</div>
@@ -29,7 +29,7 @@ export function DashboardPage() {
         <Card className="bg-blue-500 text-white">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Stock Items</CardTitle>
-            <PieChart className="h-4 w-4 text-muted" />
+            <BarChart3 className="h-4 w-4 text-muted" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">1,234</div>
@@ -42,7 +42,7 @@ export function DashboardPage() {
         <Card className="bg-green-500 text-white">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
-            <BarChart className="h-4 w-4 text-muted" />
+            <ShoppingCart className="h-4 w-4 text-muted" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">2350</div>

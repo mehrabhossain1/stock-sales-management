@@ -1,17 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import {
-  LineChart,
+  BarChart3,
+  DollarSign,
   Pencil,
-  PieChart,
   Plus,
   Search,
   Trash2,
 } from "lucide-react";
+import { useState } from "react";
 
+import { StockForm, type StockItem } from "@/components/forms/NewStockForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -22,20 +31,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { StockForm, type StockItem } from "@/components/forms/NewStockForm";
 
 // Updated mock data with dates
 const initialStockItems: StockItem[] = [
@@ -190,7 +190,7 @@ export function StockPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Stock Items
                 </CardTitle>
-                <PieChart className="h-4 w-4 text-muted" />
+                <BarChart3 className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{totalStockItems}</div>
@@ -205,7 +205,7 @@ export function StockPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Inventory Value
                 </CardTitle>
-                <LineChart className="h-4 w-4 text-muted" />
+                <DollarSign className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
