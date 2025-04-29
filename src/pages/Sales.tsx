@@ -1,17 +1,29 @@
 "use client";
 
-import { useState } from "react";
 import {
+  BarChart,
   Calendar,
   Download,
   Pencil,
+  PieChart,
   Search,
   ShoppingCart,
   Trash2,
+  Users,
 } from "lucide-react";
+import { useState } from "react";
 
+import { SalesForm, type SaleItem } from "@/components/forms/SalesForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -22,20 +34,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { SalesForm, type SaleItem } from "@/components/forms/SalesForm";
 
 // Updated mock data with new structure
 const initialSalesData: SaleItem[] = [
@@ -185,6 +188,7 @@ export function SalesPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Sales
                 </CardTitle>
+                <BarChart className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -217,6 +221,7 @@ export function SalesPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Products Sold
                 </CardTitle>
+                <PieChart className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -233,6 +238,7 @@ export function SalesPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Customers
                 </CardTitle>
+                <Users className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -297,7 +303,7 @@ export function SalesPage() {
                         <TableCell>
                           ৳{sale.pricePerProduct.toFixed(2)}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="font-medium">
                           ৳{(sale.quantity * sale.pricePerProduct).toFixed(2)}
                         </TableCell>
                         <TableCell>{formatDate(sale.date)}</TableCell>

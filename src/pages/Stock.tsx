@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil, Plus, Search, Trash2 } from "lucide-react";
+import {
+  LineChart,
+  Pencil,
+  PieChart,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -183,6 +190,7 @@ export function StockPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Stock Items
                 </CardTitle>
+                <PieChart className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{totalStockItems}</div>
@@ -197,6 +205,7 @@ export function StockPage() {
                 <CardTitle className="text-sm font-medium">
                   Total Inventory Value
                 </CardTitle>
+                <LineChart className="h-4 w-4 text-muted" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -267,9 +276,9 @@ export function StockPage() {
                           {item.name}
                         </TableCell>
                         <TableCell>{item.quantity}</TableCell>
-                        <TableCell>${item.price.toFixed(2)}</TableCell>
+                        <TableCell>৳{item.price.toFixed(2)}</TableCell>
                         <TableCell className="font-medium">
-                          ${(item.quantity * item.price).toFixed(2)}
+                          ৳{(item.quantity * item.price).toFixed(2)}
                         </TableCell>
                         <TableCell>{formatDate(item.date)}</TableCell>
                         <TableCell className="text-right">
