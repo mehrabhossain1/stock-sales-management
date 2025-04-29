@@ -84,6 +84,22 @@ export function StockPage() {
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+  // Calculate total stock items (sum of all quantities)
+  const totalStockItems = stockItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
+  // Calculate total value of inventory (sum of quantity * price for each item)
+  const totalInventoryValue = stockItems.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  );
+
+  // Calculate average price per item
+  // const averagePrice =
+  //   stockItems.length > 0 ? totalInventoryValue / totalStockItems : 0;
+
   const handleDeleteClick = (id: number) => {
     setItemToDelete(id);
     setDeleteDialogOpen(true);
@@ -159,100 +175,157 @@ export function StockPage() {
           </CardContent>
         </Card>
       ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle>Stock Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
-              <div className="relative flex-1">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search products..."
-                  className="pl-8"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline">Export</Button>
-              </div>
-            </div>
+        <>
+          {/* Summary Cards */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+            <Card className=" bg-blue-500 text-white">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Total Stock Items
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{totalStockItems}</div>
+                <p className="text-xs text-muted">
+                  Across {stockItems.length} different products
+                </p>
+              </CardContent>
+            </Card>
 
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[80px]">Serial</TableHead>
-                    <TableHead>Product Name</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>Price Per Product</TableHead>
-                    <TableHead>Date Added</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sortedAndFilteredItems.map((item, index) => (
-                    <TableRow key={item.id}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell className="font-medium">{item.name}</TableCell>
-                      <TableCell>{item.quantity}</TableCell>
-                      <TableCell>${item.price.toFixed(2)}</TableCell>
-                      <TableCell>{formatDate(item.date)}</TableCell>
-                      <TableCell className="text-right">
-                        <TooltipProvider>
-                          <div className="flex justify-end gap-2">
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                  onClick={() => handleEditClick(item)}
-                                >
-                                  <Pencil className="h-4 w-4" />
-                                  <span className="sr-only">Edit</span>
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Edit product</p>
-                              </TooltipContent>
-                            </Tooltip>
+            <Card className="bg-green-500 text-white">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Total Inventory Value
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  ৳{totalInventoryValue.toFixed(2)}
+                </div>
+                <p className="text-xs text-muted">
+                  Based on current stock levels
+                </p>
+              </CardContent>
+            </Card>
 
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  size="icon"
-                                  className="h-8 w-8 text-destructive hover:bg-destructive/10"
-                                  onClick={() => handleDeleteClick(item.id)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                  <span className="sr-only">Delete</span>
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Delete product</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </div>
-                        </TooltipProvider>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {sortedAndFilteredItems.length === 0 && (
+            {/* <Card className="bg-yellow-50 text-yellow-800">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Average Price
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  ${averagePrice.toFixed(2)}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Per item in inventory
+                </p>
+              </CardContent>
+            </Card> */}
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Stock Overview</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                <div className="relative flex-1">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="Search products..."
+                    className="pl-8"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline">Export</Button>
+                </div>
+              </div>
+
+              <div className="rounded-md border">
+                <Table>
+                  <TableHeader className="bg-muted text-muted-foreground">
                     <TableRow>
-                      <TableCell colSpan={6} className="h-24 text-center">
-                        No results found.
-                      </TableCell>
+                      <TableHead className="w-[80px]">Serial</TableHead>
+                      <TableHead>Product Name</TableHead>
+                      <TableHead>Quantity</TableHead>
+                      <TableHead>Price Per Product</TableHead>
+                      <TableHead>Total Value</TableHead>
+                      <TableHead>Date Added</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
+                  </TableHeader>
+                  <TableBody>
+                    {sortedAndFilteredItems.map((item, index) => (
+                      <TableRow key={item.id}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell className="font-medium">
+                          {item.name}
+                        </TableCell>
+                        <TableCell>{item.quantity}</TableCell>
+                        <TableCell>${item.price.toFixed(2)}</TableCell>
+                        <TableCell className="font-medium">
+                          ${(item.quantity * item.price).toFixed(2)}
+                        </TableCell>
+                        <TableCell>{formatDate(item.date)}</TableCell>
+                        <TableCell className="text-right">
+                          <TooltipProvider>
+                            <div className="flex justify-end gap-2">
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-8 w-8"
+                                    onClick={() => handleEditClick(item)}
+                                  >
+                                    <Pencil className="h-4 w-4" />
+                                    <span className="sr-only">Edit</span>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Edit product</p>
+                                </TooltipContent>
+                              </Tooltip>
+
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-8 w-8 text-destructive hover:bg-destructive/10"
+                                    onClick={() => handleDeleteClick(item.id)}
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                    <span className="sr-only">Delete</span>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Delete product</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </div>
+                          </TooltipProvider>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {sortedAndFilteredItems.length === 0 && (
+                      <TableRow>
+                        <TableCell colSpan={7} className="h-24 text-center">
+                          No results found.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+        </>
       )}
 
       {/* Delete Confirmation Dialog */}
