@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import { DashboardPage } from "./pages/Dashboard";
 // import Home from "./pages/Home";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <Router>
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<DashboardPage />} />
           {/* <Route path="/inventory" element={<Inventory />} />
           <Route path="/inventory/add" element={<AddInventory />} />
           <Route path="/sales" element={<Sales />} />
