@@ -35,7 +35,7 @@ export function AppSidebar() {
           className="flex items-center gap-3 font-bold text-2xl text-primary"
         >
           <BoxIcon className="h-8 w-8 text-primary" />
-          <span>StockMaster</span>
+          <span>Anik Enterprise</span>
         </Link>
       </SidebarHeader>
 
@@ -104,11 +104,15 @@ export function AppSidebar() {
 
       {/* Footer */}
       <div className="border-t p-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} StockMaster <br />
+        © {new Date().getFullYear()} Anik Enterprise <br />
         Developed by{" "}
-        <span className="font-semibold text-primary underline cursor-pointer">
+        <a
+          href="https://mehrab-hossain.vercel.app"
+          target="_blank"
+          className="font-semibold text-primary underline cursor-pointer"
+        >
           Mehrab Hossain
-        </span>
+        </a>
       </div>
     </Sidebar>
   );
