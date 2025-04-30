@@ -90,7 +90,7 @@ export function StockPage() {
 
   useEffect(() => {
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InpoYW5pa0BnbWFpbC5jb20iLCJpYXQiOjE3NDU5MTc4MjYsImV4cCI6MTc0NjAwNDIyNn0.Gnu73tNY2astZWIGTqYhSu0Ex8XOSq2gNG6N1mBtLOw"; // 🔐 Replace with actual token
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InpoYW5pa0BnbWFpbC5jb20iLCJpYXQiOjE3NDYwMTk4NTgsImV4cCI6MTc0NjEwNjI1OH0.Oku2cJLB11_mogf1VWNb9aGwAwlz837PO3KFCu3MzhA"; // 🔐 Replace with actual token
     fetchStocks(token);
   }, [fetchStocks]);
 
